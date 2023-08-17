@@ -22,6 +22,30 @@ const DUMMY_EXPENSE = [
 		amount: 20.99,
 		date: new Date('2023-07-12'),
 	},
+	{
+		id: 'e4',
+		description: 'purchase 4',
+		amount: 20.99,
+		date: new Date('2023-01-12'),
+	},
+	{
+		id: 'e5',
+		description: 'purchase 5',
+		amount: 28.99,
+		date: new Date('2023-08-12'),
+	},
+	{
+		id: 'e6',
+		description: 'purchase 6',
+		amount: 20.99,
+		date: new Date('2023-07-12'),
+	},
+	{
+		id: 'e7',
+		description: 'purchase 7',
+		amount: 20.99,
+		date: new Date('2023-07-12'),
+	},
 ];
 function ExpensesOutput({ expenses, periodName }) {
 	return (
