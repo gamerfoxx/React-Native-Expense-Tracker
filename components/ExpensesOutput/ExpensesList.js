@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { GlobalStyles } from '../../constants/styles';
 
 function renderExpenseItem(itemData) {
 	return <Text>{itemData.item.description}</Text>;
