@@ -15,3 +15,11 @@ function ExpensesList({ expenses }) {
 }
 
 export default ExpensesList;
+
+const styles = StyleSheet.create({
+	container: {
+		padding: 30,
+		backgroundColor: GlobalStyles.colors.primary7,
+		flex: 1,
+	},
+});
