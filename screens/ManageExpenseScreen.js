@@ -10,6 +10,9 @@ function ManageExpenseScreen({ route, navigation }) {
 	const expensesCtx = useContext(ExpensesContext);
 	const editedExpenseId = route.params?.expenseId;
 	const isEdited = !!editedExpenseId;
+	const selectedExpense = expensesCtx.expenses.find((expense) => {
+		return expense.id === editedExpenseId;
+	});
 
 	useLayoutEffect(() => {
 		navigation.setOptions({
@@ -40,6 +43,7 @@ function ManageExpenseScreen({ route, navigation }) {
 				onCancel={cancelHandler}
 				onSubmit={confirmExpenseHandler}
 				submitLabel={isEdited ? 'Update' : 'Add'}
+				defaultValue={selectedExpense}
 			/>
 
 			{isEdited && (
