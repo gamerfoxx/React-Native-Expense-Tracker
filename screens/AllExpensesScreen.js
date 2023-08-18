@@ -10,6 +10,7 @@ function AllExpensesScreen() {
 		<ExpensesOutput
 			expenses={expensesContext.expenses}
 			periodName="total"
+			fallbackText="No expenses added"
 		/>
 	);
 }

@@ -17,6 +17,7 @@ function RecentExpenseScreen() {
 		<ExpensesOutput
 			expenses={recentExpenses}
 			periodName="Last 7 days"
+			fallbackText="No recent expenses"
 		/>
 	);
 }
