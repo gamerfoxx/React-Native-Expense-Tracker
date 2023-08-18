@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 
-function Input({ label, textInputConfiguration }) {
+function Input({ label, style, textInputConfiguration }) {
 	// textInputConfiguration must be the same values as expected by TextInput
 
 	let inputStyles = [styles.input];
@@ -10,7 +10,7 @@ function Input({ label, textInputConfiguration }) {
 	}
 
 	return (
-		<View style={styles.inputContainer}>
+		<View style={[styles.inputContainer, style]}>
 			<Text style={styles.labelText}>{label}</Text>
 			<TextInput
 				style={inputStyles}
