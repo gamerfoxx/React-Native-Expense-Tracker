@@ -5,7 +5,6 @@ import { ExpensesContext } from '../store/expenses-context';
 import { getDateMinusDays } from '../util/date';
 function RecentExpenseScreen() {
 	const expensesCtx = useContext(ExpensesContext);
-	console.log(expensesCtx);
 
 	const recentExpenses = expensesCtx.expenses.filter((expense) => {
 		const today = new Date();
