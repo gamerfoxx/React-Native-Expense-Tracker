@@ -17,13 +17,13 @@ function RecentExpenseScreen() {
 			setIsFetching(true);
 			try {
 				const expenses = await fetchExpense();
+				expensesCtx.setExpenses(expenses);
 			} catch (err) {
 				console.log(err);
 				setIsError('an error occured');
 			}
 
 			setIsFetching(false);
-			expensesCtx.setExpenses(expenses);
 		}
 
 		getExpenses();
