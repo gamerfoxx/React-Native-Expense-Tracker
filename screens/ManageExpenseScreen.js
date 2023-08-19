@@ -7,9 +7,11 @@ import { ExpensesContext } from '../store/expenses-context';
 import ExpenseForm from '../components/ManageExpense/ExpenseForm';
 import { storeExpense, updateExpense, deleteExpense } from '../util/http';
 import LoadingOverlay from '../components/UI/LoadingOverlay';
+import ErrorOverlay from '../components/UI/ErrorOverlay';
 
 function ManageExpenseScreen({ route, navigation }) {
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isError, setIsError] = useState();
 
 	const expensesCtx = useContext(ExpensesContext);
 
@@ -27,10 +29,15 @@ function ManageExpenseScreen({ route, navigation }) {
 
 	async function deleteExpenseHandler() {
 		setIsSubmitting(true);
-		expensesCtx.deleteExpense(editedExpenseId);
-		await deleteExpense(editedExpenseId);
-		setIsSubmitting(false);
-		navigation.goBack();
+
+		try {
+			expensesCtx.deleteExpense(editedExpenseId);
+			await deleteExpense(editedExpenseId);
+			navigation.goBack();
+		} catch (err) {
+			setIsError('Error deleting');
+			setIsSubmitting(false);
+		}
 	}
 
 	function cancelHandler() {
@@ -38,16 +45,36 @@ function ManageExpenseScreen({ route, navigation }) {
 	}
 	async function confirmExpenseHandler(expenseData) {
 		setIsSubmitting(true);
-		if (isEdited) {
-			expensesCtx.updateExpense(editedExpenseId, expenseData);
-			await updateExpense(editedExpenseId, expenseData);
-		} else {
-			const id = await storeExpense(expenseData);
-			expensesCtx.addExpense({ ...expenseData, id: id });
+		try {
+			if (isEdited) {
+				expensesCtx.updateExpense(editedExpenseId, expenseData);
+				await updateExpense(editedExpenseId, expenseData);
+			} else {
+				const id = await storeExpense(expenseData);
+				expensesCtx.addExpense({ ...expenseData, id: id });
+			}
+			navigation.goBack();
+		} catch (err) {
+			setIsError(
+				`An error occurred while ${isEdited ? 'editing' : 'adding'} expense`
+			);
+			setIsSubmitting(false);
 		}
-		setIsSubmitting(false);
-		navigation.goBack();
 	}
+
+	function errorHandler() {
+		setIsError(null);
+	}
+
+	if (isError && !isSubmitting) {
+		return (
+			<ErrorOverlay
+				message={isError}
+				onConfirm={errorHandler}
+			/>
+		);
+	}
+
 	if (isSubmitting) {
 		return <LoadingOverlay />;
 	}
