@@ -53,7 +53,6 @@ export const ExpensesContext = createContext({
 });
 
 function expenseReducer(state, action) {
-	console.log(action.type);
 	switch (action.type) {
 		case 'ADD':
 			const lId = new Date().toString() + Math.random().toString();
