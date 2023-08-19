@@ -29,12 +29,12 @@ function ManageExpenseScreen({ route, navigation }) {
 	function cancelHandler() {
 		navigation.goBack();
 	}
-	function confirmExpenseHandler(expenseData) {
+	async function confirmExpenseHandler(expenseData) {
 		if (isEdited) {
 			expensesCtx.updateExpense(editedExpenseId, expenseData);
 		} else {
-			storeExpense(expenseData);
-			expensesCtx.addExpense(expenseData);
+			const id = await storeExpense(expenseData);
+			expensesCtx.addExpense({ ...expenseData, id: id });
 		}
 		navigation.goBack();
 	}

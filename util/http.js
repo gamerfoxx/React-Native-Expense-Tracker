@@ -2,8 +2,10 @@ import axios from 'axios';
 
 const API_URL = `https://react-native-expense-tra-b9ebd-default-rtdb.firebaseio.com`;
 
-export function storeExpense(expenseData) {
-	axios.post(`${API_URL}/expenses.json`, expenseData);
+export async function storeExpense(expenseData) {
+	const response = await axios.post(`${API_URL}/expenses.json`, expenseData);
+	const id = response.data.name;
+	return id;
 }
 
 export async function fetchExpense() {

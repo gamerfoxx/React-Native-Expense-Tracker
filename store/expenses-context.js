@@ -11,10 +11,10 @@ export const ExpensesContext = createContext({
 function expenseReducer(state, action) {
 	switch (action.type) {
 		case 'ADD':
-			const lId = new Date().toString() + Math.random().toString();
-			return [{ id: lId, ...action.payload }, ...state];
+			return [action.payload, ...state];
 		case 'SET':
-			return action.payload;
+			const ordered = action.payload.reverse();
+			return ordered;
 		case 'UPDATE':
 			const idExpenseToUpdate = state.findIndex((expense) => {
 				return expense.id === action.payload.id;
