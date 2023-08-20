@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -28,6 +28,40 @@ const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function BottomTabsOverView() {
+	useEffect(() => {
+		async function setupPushNotifications() {
+			const { status } = await Notifications.getPermissionsAsync();
+			let finalStatus = status;
+			if (finalStatus !== 'granted') {
+				const { status } = await Notifications.requestPermissionsAsync();
+				finalStatus = status;
+			}
+
+			if (finalStatus !== 'granted') {
+				Alert.alert(
+					'Permissions required',
+					'Require Push notification permissions'
+				);
+				return;
+			}
+
+			const pushToken = await Notifications.getExpoPushTokenAsync().then(
+				(pushToken) => {
+					return pushToken;
+				}
+			);
+
+			console.log('here', pushToken);
+			if (Platform.OS === 'android') {
+				Notifications.setNotificationChannelAsync('default', {
+					name: 'default',
+					importance: Notifications.AndroidImportance.DEFAULT,
+				});
+			}
+		}
+		setupPushNotifications();
+	}, []);
+
 	useEffect(() => {
 		const subscription1 = Notifications.addNotificationReceivedListener(
 			(notification) => {
